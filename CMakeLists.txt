@@ -141,6 +141,7 @@ set(Slicer_EXTENSION_SOURCE_DIRS
   #${Halt_SOURCE_DIR}/Modules/CLI/MyCLIModule
   #${Halt_SOURCE_DIR}/Modules/Loadable/MyLoadableModule
   ${Halt_SOURCE_DIR}/Modules/Scripted/Home
+  ${Halt_SOURCE_DIR}/Modules/Scripted/tavi_analytics
   )
 
 # Add remote extension source directories

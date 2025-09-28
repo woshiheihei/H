@@ -1,0 +1,3 @@
+[submodule "Modules/Scripted/tavi_analytics"]
+	path = Modules/Scripted/tavi_analytics
+	url = https://github.com/woshiheihei/tavi_analytics
