@@ -74,3 +74,8 @@ Install [NSIS 2](http://sourceforge.net/projects/nsis/files/)
 cd C:\W\HR\Slicer-build
 cmake --build . --config Release --target PACKAGE
 ```
+
+
+
+更改了CMakeList.txt文件之后
+cmake -S C:\W\H -B C:\W\HR -DBUILD_TESTING=OFF

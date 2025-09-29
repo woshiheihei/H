@@ -37,7 +37,7 @@ set(Slicer_ORGANIZATION_DOMAIN "kitware.com")
 set(Slicer_ORGANIZATION_NAME   "TAVIMERCY")
 
 # Default home and favorite modules
-set(Slicer_DEFAULT_HOME_MODULE "Home")
+set(Slicer_DEFAULT_HOME_MODULE "Data")
 set(Slicer_DEFAULT_FAVORITE_MODULES "Data, Volumes, Models, Transforms, Markups, SegmentEditor")
 
 # Configure SuperBuild
@@ -128,6 +128,7 @@ set(Slicer_QTLOADABLEMODULES_DISABLED
   )
 set(Slicer_QTSCRIPTEDMODULES_DISABLED
   DataProbe
+  Home
   DMRIInstall
   Endoscopy
   LabelStatistics
@@ -140,7 +141,6 @@ set(Slicer_QTSCRIPTEDMODULES_DISABLED
 set(Slicer_EXTENSION_SOURCE_DIRS
   #${Halt_SOURCE_DIR}/Modules/CLI/MyCLIModule
   #${Halt_SOURCE_DIR}/Modules/Loadable/MyLoadableModule
-  ${Halt_SOURCE_DIR}/Modules/Scripted/Home
   ${Halt_SOURCE_DIR}/Modules/Scripted/tavi_analytics
   )
 
