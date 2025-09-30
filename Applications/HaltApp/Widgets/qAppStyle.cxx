@@ -52,30 +52,43 @@ QPalette qAppStyle::standardPalette()const
 {
   QPalette palette = this->Superclass::standardPalette();
 
-  palette.setColor(QPalette::Active, QPalette::Window, "#eaebee");
-  palette.setColor(QPalette::Inactive, QPalette::Window, "#eaebee");
-  palette.setColor(QPalette::Disabled, QPalette::Window, "#dedfe1");
-  palette.setColor(QPalette::Active, QPalette::WindowText, "#002f4f");
-  palette.setColor(QPalette::Inactive, QPalette::WindowText, "#002f4f");
-  palette.setColor(QPalette::Disabled, QPalette::WindowText, "#2a404f");
-  palette.setColor(QPalette::Active, QPalette::Text, "#002f4f");
-  palette.setColor(QPalette::Inactive, QPalette::Text, "#002f4f");
-  palette.setColor(QPalette::Disabled, QPalette::Text, "#2a404f");
+  // Claude风格现代简约配色方案
+  // 主背景 - 温暖的奶白色，提供舒适的视觉体验
+  palette.setColor(QPalette::Active, QPalette::Window, "#fefefe");
+  palette.setColor(QPalette::Inactive, QPalette::Window, "#fefefe");
+  palette.setColor(QPalette::Disabled, QPalette::Window, "#f8f9fa");
+  
+  // 主文本 - 深邃的炭黑色，确保优秀的可读性
+  palette.setColor(QPalette::Active, QPalette::WindowText, "#1a1a1a");
+  palette.setColor(QPalette::Inactive, QPalette::WindowText, "#1a1a1a");
+  palette.setColor(QPalette::Disabled, QPalette::WindowText, "#6b7280");
+  
+  // 输入框文本
+  palette.setColor(QPalette::Active, QPalette::Text, "#1a1a1a");
+  palette.setColor(QPalette::Inactive, QPalette::Text, "#1a1a1a");
+  palette.setColor(QPalette::Disabled, QPalette::Text, "#9ca3af");
+  
+  // 输入框背景 - 纯净白色
   palette.setColor(QPalette::Active, QPalette::Base, "#ffffff");
   palette.setColor(QPalette::Inactive, QPalette::Base, "#ffffff");
-  palette.setColor(QPalette::Disabled, QPalette::Base, "#eaebee");
+  palette.setColor(QPalette::Disabled, QPalette::Base, "#f9fafb");
 
-
+  // 辅助颜色
   palette.setColor(QPalette::Light, "#ffffff");
-  palette.setColor(QPalette::Button, "#dedfe1");
-  palette.setColor(QPalette::Mid, "#005f9e");
-  palette.setColor(QPalette::Dark, "#005f9e");
-  palette.setColor(QPalette::Active, QPalette::ButtonText, "#005f9e");
-  palette.setColor(QPalette::Inactive, QPalette::ButtonText, "#005f9e");
-  palette.setColor(QPalette::Disabled, QPalette::ButtonText, "#003050");
-  palette.setColor(QPalette::Shadow, "#002f4f");
+  palette.setColor(QPalette::Button, "#f3f4f6");  // 淡灰色按钮背景
+  palette.setColor(QPalette::Mid, "#d97706");     // Claude风格橙色强调色
+  palette.setColor(QPalette::Dark, "#d97706");    // Claude品牌橙色
+  
+  // 按钮文本 - Claude品牌橙色
+  palette.setColor(QPalette::Active, QPalette::ButtonText, "#d97706");
+  palette.setColor(QPalette::Inactive, QPalette::ButtonText, "#d97706");
+  palette.setColor(QPalette::Disabled, QPalette::ButtonText, "#9ca3af");
+  
+  // 阴影色 - 柔和的灰色
+  palette.setColor(QPalette::Shadow, "#374151");
 
-  palette.setColor(QPalette::Highlight, "#009d49");
+  // 高亮选择 - Claude风格温暖橙色
+  palette.setColor(QPalette::Highlight, "#fb923c");
   palette.setColor(QPalette::HighlightedText, "#ffffff");
 
   return palette;
