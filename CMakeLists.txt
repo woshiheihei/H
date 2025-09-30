@@ -37,7 +37,7 @@ set(Slicer_ORGANIZATION_DOMAIN "kitware.com")
 set(Slicer_ORGANIZATION_NAME   "TAVIMERCY")
 
 # Default home and favorite modules
-set(Slicer_DEFAULT_HOME_MODULE "Data")
+set(Slicer_DEFAULT_HOME_MODULE "tavi_analytics" CACHE STRING "Default module shown on startup" FORCE)
 set(Slicer_DEFAULT_FAVORITE_MODULES "Data, Volumes, Models, Transforms, Markups, SegmentEditor")
 
 # Configure SuperBuild
