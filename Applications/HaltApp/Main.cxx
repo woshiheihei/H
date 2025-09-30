@@ -24,6 +24,9 @@
 #include "qSlicerApplicationHelper.h"
 #include "vtkSlicerConfigure.h" // For Slicer_MAIN_PROJECT_APPLICATION_NAME
 #include "vtkSlicerVersionConfigure.h" // For Slicer_MAIN_PROJECT_VERSION_FULL
+// Qt includes (fonts)
+#include <QFont>
+#include <QFontDatabase>
 
 namespace
 {
@@ -40,6 +43,42 @@ int SlicerAppMain(int argc, char* argv[])
     {
     return app.returnCode();
     }
+
+#ifdef Q_OS_WIN
+  // Prefer Microsoft YaHei for better CJK rendering on Windows.
+  // Keep the system default point size, only change the family.
+  {
+    const QStringList yaheiCandidates = {
+      QString::fromLatin1("Microsoft YaHei UI"),
+      QString::fromLatin1("Microsoft YaHei"),
+      // Some systems expose the localized family name
+      QString::fromUtf8("微软雅黑")
+    };
+
+    QString chosenFamily;
+    const QStringList families = QFontDatabase().families();
+    for (const QString& candidate : yaheiCandidates)
+      {
+      if (families.contains(candidate, Qt::CaseInsensitive))
+        {
+        chosenFamily = candidate;
+        break;
+        }
+      }
+
+    if (!chosenFamily.isEmpty())
+      {
+      QFont f = app.font(); // preserve size/weight
+      f.setFamily(chosenFamily);
+      // Prefer anti-aliased glyphs for UI fonts
+      f.setStyleStrategy(QFont::PreferAntialias);
+      app.setFont(f);
+      // Help resolve generic families to YaHei where possible
+      QFont::insertSubstitution(QString::fromLatin1("Sans Serif"), chosenFamily);
+      QFont::insertSubstitution(QString::fromLatin1("MS Shell Dlg 2"), chosenFamily);
+      }
+  }
+#endif
 
   QScopedPointer<SlicerMainWindowType> window;
   QScopedPointer<QSplashScreen> splashScreen;
