@@ -22,6 +22,9 @@
 // Qt includes
 #include <QDesktopWidget>
 #include <QLabel>
+#include <QStatusBar>
+#include <QToolBar>
+#include <QDockWidget>
 
 // Slicer includes
 #include "qSlicerApplication.h"
@@ -81,16 +84,115 @@ void qHaltAppMainWindowPrivate::setupUi(QMainWindow * mainWindow)
 
   QLabel* logoLabel = new QLabel();
   logoLabel->setObjectName("LogoLabel");
-  logoLabel->setPixmap(qMRMLWidget::pixmapFromIcon(QIcon(":/LogoFull.png")));
+  
+  // Load logo with high DPI support for better clarity
+  QIcon logoIcon(":/HALT.png");
+  // Get the largest available size for best quality
+  QSize iconSize = logoIcon.availableSizes().isEmpty() ? QSize(938, 386) : logoIcon.availableSizes().last();
+  QPixmap logoPixmap = logoIcon.pixmap(iconSize);
+  
+  // Scale to appropriate size for title bar (max height 80px, maintain aspect ratio)
+  int maxHeight = 80;
+  if (logoPixmap.height() > maxHeight)
+  {
+    // Use Qt::SmoothTransformation for high quality scaling
+    logoPixmap = logoPixmap.scaledToHeight(maxHeight, Qt::SmoothTransformation);
+  }
+  
+  // Set device pixel ratio for high DPI displays
+  #if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
+  logoPixmap.setDevicePixelRatio(qApp->devicePixelRatio());
+  #endif
+  
+  logoLabel->setPixmap(logoPixmap);
+  logoLabel->setScaledContents(false);
+  logoLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+  // Set margins: left, top, right, bottom (no bottom margin)
+  logoLabel->setContentsMargins(8, 8, 8, 8);
+  logoLabel->setStyleSheet("QLabel { padding: 0px; }");
   this->PanelDockWidget->setTitleBarWidget(logoLabel);
 
   // Hide the menus
-  //this->menubar->setVisible(false);
-  //this->FileMenu->setVisible(false);
-  //this->EditMenu->setVisible(false);
-  //this->ViewMenu->setVisible(false);
-  //this->LayoutMenu->setVisible(false);
-  //this->HelpMenu->setVisible(false);
+  this->menubar->setVisible(false);
+  this->FileMenu->setVisible(false);
+  this->EditMenu->setVisible(false);
+  this->ViewMenu->setVisible(false);
+  this->LayoutMenu->setVisible(false);
+  this->HelpMenu->setVisible(false);
+
+  //----------------------------------------------------------------------------
+  // Hide additional UI elements (similar to Python setSlicerUIVisible(False))
+  //----------------------------------------------------------------------------
+  
+  // Hide Data Probe (bottom status bar area)
+  QWidget* dataProbeWidget = mainWindow->findChild<QWidget*>("DataProbeCollapsibleWidget");
+  if (dataProbeWidget)
+  {
+    dataProbeWidget->setVisible(false);
+  }
+
+  // Hide status bar
+  if (mainWindow->statusBar())
+  {
+    mainWindow->statusBar()->setVisible(false);
+  }
+
+  // Hide module panel title
+  QWidget* modulePanelTitle = mainWindow->findChild<QWidget*>("ModulePanelDockWidgetTitleBar");
+  if (modulePanelTitle)
+  {
+    modulePanelTitle->setVisible(false);
+  }
+
+  // Hide module help section
+  QWidget* moduleHelp = mainWindow->findChild<QWidget*>("ModuleHelpCollapsibleWidget");
+  if (moduleHelp)
+  {
+    moduleHelp->setVisible(false);
+  }
+
+  // Hide Python console
+  QWidget* pythonConsole = mainWindow->findChild<QWidget*>("PythonConsoleWidget");
+  if (pythonConsole)
+  {
+    pythonConsole->setVisible(false);
+  }
+  QDockWidget* pythonConsoleDock = mainWindow->findChild<QDockWidget*>("PythonConsoleDockWidget");
+  if (pythonConsoleDock)
+  {
+    pythonConsoleDock->setVisible(false);
+  }
+
+  // Hide application logo (except our custom one)
+  QLabel* appLogo = mainWindow->findChild<QLabel*>("LogoLabel");
+  if (appLogo && appLogo != logoLabel)
+  {
+    appLogo->setVisible(false);
+  }
+
+  // Hide toolbars except important ones for medical imaging
+  // Keep visible: MainToolBar, ViewToolBar, MouseModeToolBar (crosshair/window-level)
+  QList<QToolBar*> toolbars = mainWindow->findChildren<QToolBar*>();
+  QStringList keepToolbars;
+  keepToolbars << "MainToolBar" << "ViewToolBar" << "MouseModeToolBar";
+  
+  foreach (QToolBar* toolbar, toolbars)
+  {
+    QString toolbarName = toolbar->objectName();
+    // Hide toolbars not in the keep list
+    if (!keepToolbars.contains(toolbarName))
+    {
+      toolbar->setVisible(false);
+    }
+  }
+
+  // Hide module selector toolbar
+  qSlicerModuleSelectorToolBar* moduleSelectorToolBar = 
+    mainWindow->findChild<qSlicerModuleSelectorToolBar*>();
+  if (moduleSelectorToolBar)
+  {
+    moduleSelectorToolBar->setVisible(false);
+  }
 }
 
 //-----------------------------------------------------------------------------
