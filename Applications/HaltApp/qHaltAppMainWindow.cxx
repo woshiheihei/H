@@ -183,7 +183,7 @@ void qHaltAppMainWindowPrivate::setupUi(QMainWindow * mainWindow)
   // Keep visible: MainToolBar, ViewToolBar, MouseModeToolBar (crosshair/window-level)
   QList<QToolBar*> toolbars = mainWindow->findChildren<QToolBar*>();
   QStringList keepToolbars;
-  keepToolbars << "MainToolBar" << "ViewToolBar" << "MouseModeToolBar";
+  keepToolbars << "ViewToolBar" << "MouseModeToolBar";
   
   foreach (QToolBar* toolbar, toolbars)
   {
@@ -201,6 +201,18 @@ void qHaltAppMainWindowPrivate::setupUi(QMainWindow * mainWindow)
   if (moduleSelectorToolBar)
   {
     moduleSelectorToolBar->setVisible(false);
+  }
+
+  // Remove Load/Save toolbar toggle from the UI (hide MainToolBar entirely)
+  QToolBar* loadSaveToolBar = mainWindow->findChild<QToolBar*>("MainToolBar");
+  if (loadSaveToolBar)
+  {
+    loadSaveToolBar->setVisible(false);
+    if (QAction* toggleAction = loadSaveToolBar->toggleViewAction())
+    {
+      toggleAction->setEnabled(false);
+      toggleAction->setVisible(false);
+    }
   }
 
   //----------------------------------------------------------------------------
