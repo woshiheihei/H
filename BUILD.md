@@ -57,6 +57,42 @@ cmake -G "Visual Studio 17 2022" -A x64 -DQt5_DIR:PATH=`C:/Qt/${QT_VERSION}/${CO
 cmake --build . --config Release -- /maxcpucount:4
 ```
 
+## Quick Rebuild (Development)
+
+### For C++ Code Changes
+
+Quick rebuild of qHaltApp (fast, ~2-5 minutes):
+
+```bat
+cd C:\W\H
+.\scripts\rebuild-halt.ps1
+```
+
+This script will: stop Halt, clean cache, build qHaltApp, and start the application.
+
+Options:
+```bat
+.\scripts\rebuild-halt.ps1 -BuildOnly    # Build without starting
+.\scripts\rebuild-halt.ps1 -SkipBuild    # Quick restart only
+.\scripts\rebuild-halt.ps1 -Config Debug # Debug build
+```
+
+### For Python Code Changes
+
+For daily development of tavi_analytics Python code (fast, ~5 seconds):
+
+```bat
+cd C:\W\HR\Slicer-build\E\tavi_analytics
+cmake --build . --config Release
+```
+
+Or use the quick update script:
+
+```bat
+cd C:\W\H
+.\scripts\update-python-modules.ps1
+```
+
 ## Package
 
 Install [NSIS 2](http://sourceforge.net/projects/nsis/files/)
@@ -74,8 +110,3 @@ Install [NSIS 2](http://sourceforge.net/projects/nsis/files/)
 cd C:\W\HR\Slicer-build
 cmake --build . --config Release --target PACKAGE
 ```
-
-
-
-更改了CMakeList.txt文件之后
-cmake -S C:\W\H -B C:\W\HR -DBUILD_TESTING=OFF

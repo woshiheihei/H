@@ -17,5 +17,6 @@ _List key features_
 
 - [Contributing](CONTRIBUTING.md)
 - [Building](BUILD.md)
+- [Development Scripts](scripts/README.md) - Quick rebuild and update scripts
 
 ![Halt by TAVIMERCY](Applications/HaltApp/Resources/Images/LogoFull.png?raw=true)

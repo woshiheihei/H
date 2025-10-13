@@ -96,17 +96,17 @@ endif()
 option(Slicer_BUILD_DICOM_SUPPORT               "Build application with DICOM support"                ON)
 option(Slicer_BUILD_DIFFUSION_SUPPORT           "Build application with Diffusion support"            OFF)
 option(Slicer_BUILD_EXTENSIONMANAGER_SUPPORT    "Build application with ExtensionManager support"     OFF)
-option(Slicer_BUILD_MULTIVOLUME_SUPPORT         "Build application with MultiVolume support"          OFF)
+option(Slicer_BUILD_MULTIVOLUME_SUPPORT         "Build application with MultiVolume support"          ON)  # 开启：支持心动周期时序数据
 option(Slicer_BUILD_PARAMETERSERIALIZER_SUPPORT "Build application with parameter serializer support" OFF)
 option(Slicer_USE_PYTHONQT                      "Build application with Python support"               ON)
 option(Slicer_USE_QtTesting                     "Build application with QtTesting support"            OFF)
-option(Slicer_USE_SimpleITK                     "Build application with SimpleITK support"            OFF)
+option(Slicer_USE_SimpleITK                     "Build application with SimpleITK support"            ON)  # 开启：Python 图像处理支持
 
 option(Slicer_BUILD_BRAINSTOOLS                 "Build application with BRAINSTools module"           OFF)
 option(Slicer_BUILD_DataStore                   "Build application with DataStore module"             OFF)
-option(Slicer_BUILD_CompareVolumes              "Build application with ChangeTrackerPy module"       OFF)
-option(Slicer_BUILD_LandmarkRegistration        "Build application with LandmarkRegistration module"  OFF)
-option(Slicer_BUILD_SurfaceToolbox              "Build application with SurfaceToolbox module"        OFF)
+option(Slicer_BUILD_CompareVolumes              "Build application with ChangeTrackerPy module"       ON)  # 开启：术前/术后对比
+option(Slicer_BUILD_LandmarkRegistration        "Build application with LandmarkRegistration module"  ON)  # 开启：手动配准功能
+option(Slicer_BUILD_SurfaceToolbox              "Build application with SurfaceToolbox module"        ON)  # 开启：心脏瓣膜 3D 模型处理
 
 # Enable Slicer built-in modules
 set(Slicer_CLIMODULES_ENABLED
