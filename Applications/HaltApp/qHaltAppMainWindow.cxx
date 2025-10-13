@@ -26,6 +26,15 @@
 #include <QToolBar>
 #include <QDockWidget>
 
+// STL includes
+#include <vector>
+
+// VTK includes
+#include <vtkMRMLNode.h>
+#include <vtkMRMLScene.h>
+#include <vtkMRMLSliceNode.h>
+#include <vtkMRMLAbstractViewNode.h>
+#include <vtkMRMLViewNode.h>
 // Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerAboutDialog.h"
@@ -192,6 +201,45 @@ void qHaltAppMainWindowPrivate::setupUi(QMainWindow * mainWindow)
   if (moduleSelectorToolBar)
   {
     moduleSelectorToolBar->setVisible(false);
+  }
+
+  //----------------------------------------------------------------------------
+  // Set 3D view background color to black
+  //----------------------------------------------------------------------------
+  vtkMRMLScene* scene = app ? app->mrmlScene() : nullptr;
+  if (scene)
+  {
+    std::vector<vtkMRMLNode*> viewNodes;
+    scene->GetNodesByClass("vtkMRMLViewNode", viewNodes);
+
+    for (vtkMRMLNode* node : viewNodes)
+    {
+      vtkMRMLViewNode* viewNode = vtkMRMLViewNode::SafeDownCast(node);
+      if (!viewNode)
+      {
+        continue;
+      }
+      viewNode->SetBackgroundColor(0.0, 0.0, 0.0);
+      viewNode->SetBackgroundColor2(0.0, 0.0, 0.0);
+      // Set orientation marker to human type
+      viewNode->SetOrientationMarkerType(vtkMRMLAbstractViewNode::OrientationMarkerTypeHuman);
+      viewNode->SetOrientationMarkerSize(vtkMRMLAbstractViewNode::OrientationMarkerSizeMedium);
+      // Hide bounding box and axis labels
+      viewNode->SetBoxVisible(0);
+      viewNode->SetAxisLabelsVisible(0);
+    }    std::vector<vtkMRMLNode*> sliceNodes;
+    scene->GetNodesByClass("vtkMRMLSliceNode", sliceNodes);
+
+    for (vtkMRMLNode* node : sliceNodes)
+    {
+      vtkMRMLSliceNode* sliceNode = vtkMRMLSliceNode::SafeDownCast(node);
+      if (!sliceNode)
+      {
+        continue;
+      }
+      sliceNode->SetOrientationMarkerType(vtkMRMLAbstractViewNode::OrientationMarkerTypeHuman);
+      sliceNode->SetOrientationMarkerSize(vtkMRMLAbstractViewNode::OrientationMarkerSizeMedium);
+    }
   }
 }
 
