@@ -8,6 +8,6 @@
     <file alias="Logo.png">Images/Logo.png</file>
     <file alias="LogoFull.png">Images/LogoFull.png</file>
     <file alias="HALT.png">Images/HALT.png</file>
-    <file alias="SplashScreen.png">Images/SplashScreen.png</file>
+    <file alias="SplashScreen.png">Images/HALT_SplashScreen.png</file>
   </qresource>
 </RCC>
